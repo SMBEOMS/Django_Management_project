@@ -17,7 +17,7 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="" class="logo"><strong>1004</strong>경영캡스톤프로젝트</a>
+									<a href="" class="logo"><strong>Cheonan Site</strong></a>
 									<ul class="icons">
 										<li><a href="https://twitter.com/" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="https://www.facebook.com/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -88,19 +88,36 @@
 							<section>
 								<header class="major">
 									<h2>에디터 입력부분</h2>
+									{% if user.is_authenticated %}
+										{% if user.is_superuser or user.is_staff %}
+											<a class="btn btn-info btn-sm float-right" href="/teamangel/create_post/" role="button">
+												<i class ="fas fa-pen"></i>&nbsp;&nbsp;New Post</a>
+										{% endif %}
+									{% endif %}
 								</header>
 								<div class="posts">
 									{% for p in post_list %}
 									<article>
-										<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+										{% if p.head_image %}
+											<span class="image"><img src="{{ p.head_image.url }}" alt="{{ p.title }} head-image" /></span>
+										{% else %}
+											<span class="image"><img src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random-image" /></span>
+										{% endif %}
+										<!-- 이미지 넣기 -->
 										<h2>{{ p.title }}</h2> <!-- 수정된 부분 -->
-										<p>{{ p.content }}</p> <!-- 수정된 부분 -->
-										<div>작성날짜 {{ p.created_at }}</div>
+										{% if p.hook_text %}
+											<h5 class="text-muted">{{ p.hook_text }}</h5> <!-- class 부분수정 -->
+										{% endif %}
+										<p>{{ p.content | truncatewords:20}}</p> <!-- 수정된 부분 -->
+										<div>작성날짜 {{ p.created_at }} by
+										{{ p.author | upper }}</div>
 										<ul class="actions">
 											<li><a href="{{ p.get_absolute_url }}" class="button">More</a></li>
 										</ul>
+										<p>조회수: 개발하기</p>
 									</article>
 									{% endfor %}
+
 								</div>
 							</section>
 						</div>
@@ -112,20 +129,20 @@
 
 							<!-- Search -->
 								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
+									<form method="get" action="https://search.naver.com/search.naver" target="_blank">
+										<input type="text" name="query" id="query" placeholder="Press Enter" />
 									</form>
 								</section>
-
 							<!-- Menu -->
 								<nav id="menu">
 									<header class="major">
 										<h2>Menu</h2>
 									</header>
 									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
+										<li><a href="/teamangel/">Homepage</a></li>
+										<li><a href="/space/">Space</a></li>
+										<li><a href="/show/">Show and Exhibition</a></li>
+										<li><a href="/brand/">Brand</a></li>
 										<li>
 											<span class="opener">Submenu</span>
 											<ul>
@@ -201,11 +218,12 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="teamangel/assets/js/jquery.min.js"></script>
-			<script src="teamangel/assets/js/browser.min.js"></script>
-			<script src="teamangel/assets/js/breakpoints.min.js"></script>
-			<script src="teamangel/assets/js/util.js"></script>
-			<script src="teamangel/assets/js/main.js"></script>
+			<script src="{% static 'teamangel/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'teamangel/assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'teamangel/assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'teamangel/assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'teamangel/assets/js/util.js' %}"></script>
+			<script src="{% static 'teamangel/assets/js/main.js' %}"></script>
 
 	</body>
 </html>

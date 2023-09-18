@@ -25,6 +25,9 @@
 
                                     </nav>
 									<ul class="icons">
+										{% if user.is_authenticated and user == post.author %}
+                            				<a class="btn btn-info btn-sm float-right" href="/teamangel/update_post/{{ post.pk }}/" role="button"><i class ="fas fa-pen"></i>Edit Post</a>
+                        				{% endif %}
 										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
 										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
@@ -37,6 +40,8 @@
 								<section>
 									<header class="main">
 										<h1>{{ post.title }}</h1>
+
+										<h5>{{ post.hook_text }}</h5> <!-- 클래스 수정하기 -->
                                         <h4>{{ post.created_at }}</h4>
 									</header>
 									{% if post.head_image %}
@@ -53,7 +58,7 @@
 
 									<hr class="major" />
 
-									<h2>첨부 파일 다운로드 버튼</h2>
+									<h2>첨부 파일 다운로드 버튼</h2> <!--class 부분 수정 -->
 									{% if post.file_upload %}
 										<a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>Download:
 											{% if post.get_file_ext == 'csv' %}
@@ -85,8 +90,8 @@
 
 							<!-- Search -->
 								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
+									<form method="get" action="https://search.naver.com/search.naver" target="_blank">
+										<input type="text" name="query" id="query" placeholder="Press Enter" />
 									</form>
 								</section>
 
@@ -97,8 +102,9 @@
 									</header>
 									<ul>
 										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Generic</a></li>
-										<li><a href="elements.html">Elements</a></li>
+										<li><a href="generic.html">Space</a></li>
+										<li><a href="elements.html">Show and Exhibition</a></li>
+										<li><a href="elements.html">Brand</a></li>
 										<li>
 											<span class="opener">Submenu</span>
 											<ul>
