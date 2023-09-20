@@ -2,13 +2,38 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
 
-from .models import Post
+from .models import Post, Category
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 class PostList(ListView):
     model = Post
     ordering = '-pk' #ListView로 포스트 목록 페이지 만들기
+
+    def get_context_data(self, **kwargs):
+        context = super(PostList, self).get_context_data()  # post_list
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        return context  # -> post_list.html
+def category_page(request, slug):
+    if slug == 'no_category':
+        category = '미분류'
+        post_list = Post.objects.filter(category=None)
+    else:
+        category = Category.objects.get(slug=slug)
+        post_list = Post.objects.filter(category=category)
+
+    return render(
+        request,
+        'teamangel/post_list.html',
+        {
+            'categories': Category.objects.all(),
+            'no_category_post_count': Post.objects.filter(category=None).count(),
+            'category': category,
+            'post_list': post_list,
+
+        }
+    )
 
 class PostDetail(DetailView):
     model = Post
