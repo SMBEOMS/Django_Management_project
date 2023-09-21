@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load crispy_forms_tags %}
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -21,8 +22,7 @@
 							<!-- Header -->
 								<header id="header">
 									<nav>
-                                      <a href="/teamangel/" class="button">Cheonnan Site</a>
-
+                                      <a href="/teamangel/" class="button">Home Page</a>
                                     </nav>
 									<ul class="icons">
 										{% if user.is_authenticated and user == post.author %}
@@ -73,12 +73,60 @@
 										{{ post.get_file_name }}
 										</a>
 									{% endif %}
-									<hr class="major" />
 
-									<h2>Lorem aliquam bibendum</h2>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
 
+									<!-- Comment -->
+									{% if user.is_authenticated %}
+									<form id="comment-form" method="POST" action="{{ post.get_absolute_url }}new_comment/">
+										{% csrf_token %}
+										<div class="col-12">
+											<textarea name="content" id="demo-message" placeholder="Enter your message" rows="6">{{ comment_form.content }}</textarea>
+										</div>
+										<!-- Break -->
+										<div class="col-12">
+											<ul class="actions">
+												<li><input type="submit" value="Submit" class="primary" /></li>
+											</ul>
+										</div>
+									</form>
+
+									{% else %}
+									<div class="col-6 col-12-small">
+										<ul class="actions stacked">
+											<li>
+												<a href="#" class="button small fit btn btn-outline-dark btn-block btn-sm"
+													data-toggle="modal" data-target="#loginModal">Log In and leave a comment</a>
+											</li>
+										</ul>
+									</div>
+									{% endif %}
+
+									{% if post.comment_set.exists %}
+										{% for comment in post.comment_set.iterator %}
+										<div class="media mb-4" id="comment- {{ comment.pk }}">
+											<img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50*50" alt="">
+											<div class="media-body">
+												<h5 class="mt-0">{{	comment.author.username }} &nbsp;&nbsp;<small class="text-muted">
+													{{ comment.created_at }}</small>
+												</h5>
+												<p>{{ comment.content | linebreaks }}</p>
+												{% if comment.created_at != comment.modified_at %}
+													<p class="text-muted float-right"><small>Updated: {{comment.modified_at}}</small></p>
+												{% endif %}
+												{% if user.is_authenticated and comment.author == user %}
+													<a class="btn btn-sm btn-info button primary" role="button" id="comment-{{ comment.pk }}-update-btn" href="/teamangel/update_comment/{{comment.pk}}/">
+														<small>Edit</small>
+													</a>
+
+													<a class="btn btn-sm btn-danger button" role="button" id="comment-{{ comment.pk }}-delete-modal-btn" href="/teamangel/delete_comment/{{comment.pk}}">
+														<small>Delete</small>
+													</a>
+												{% endif %}
+
+											</div>
+										</div>
+										{% endfor %}
+									{% endif %}
 								</section>
 
 						</div>
@@ -91,7 +139,7 @@
 							<!-- Search -->
 								<section id="search" class="alt">
 									<form method="get" action="https://search.naver.com/search.naver" target="_blank">
-										<input type="text" name="query" id="query" placeholder="Press Enter" />
+										<input tyxpe="text" name="query" id="query" placeholder="Press Enter" />
 									</form>
 								</section>
 

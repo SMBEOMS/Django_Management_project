@@ -23,6 +23,7 @@ urlpatterns = [
     path('teamangel/', include('teamangel.urls')),
     path("admin/", admin.site.urls),
     path('', include('single_pages.urls')), #대문페이지
+    path('accounts/', include('allauth.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

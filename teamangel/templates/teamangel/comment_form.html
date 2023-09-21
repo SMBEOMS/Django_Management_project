@@ -29,17 +29,15 @@
                 <!-- 포스트 작성 폼 -->
                 <section>
                     <header class="major">
-                        <h2>포스트 작성</h2>
+                        <h2>Edit Comment</h2>
                     </header>
-                    <div class="content">
-                        <!-- 폼 시작 -->
-                        <form method="post" enctype="multipart/form-data">
-						  {% csrf_token %}
-						  {{ form.as_p }}
-						  <button type="submit">저장</button>
-						</form>
-                        <!-- 폼 끝 -->
-                    </div>
+                    <form method = "post" id="comment-form">{% csrf_token %}
+						<!-- 테이블 테그를 안넣으면 한줄로보임-->
+							{{ form }}
+						<ul class="actions">
+							<li><input type="submit" value="Submit" class="primary" /></li>
+						</ul>
+					</form>
                 </section>
             </div>
         </div>
