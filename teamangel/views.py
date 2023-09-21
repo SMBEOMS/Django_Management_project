@@ -41,19 +41,19 @@ class PostDetail(DetailView):
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload']
+    fields = ['title', 'hook_text', 'content', 'category', 'head_image', 'file_upload']
     template_name = 'teamangel/post_update_form.html'
 
-def dispatch(self, request, *args, **kwargs):
-    if request.user.is_authenticated and request.user == self.get_object().author:
-        return super(PostUpdate, self).dispatch(request, *args, **kwargs)
-    else:
-        raise PermissionDenied  # 포스트작성자마 수정할수있는 코드
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied  # 포스트작성자마 수정할수있는 코드
 
 
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):  # form 기준
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload']
+    fields = ['title', 'hook_text', 'content', 'category', 'head_image', 'file_upload']
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff

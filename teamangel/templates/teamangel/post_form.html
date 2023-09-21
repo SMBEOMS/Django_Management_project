@@ -31,11 +31,11 @@
                     </header>
                     <div class="content">
                         <!-- 폼 시작 -->
-                        <form method="post">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <input type="submit" value="포스트 작성">
-                        </form>
+                        <form method="post" enctype="multipart/form-data">
+						  {% csrf_token %}
+						  {{ form.as_p }}
+						  <button type="submit">저장</button>
+						</form>
                         <!-- 폼 끝 -->
                     </div>
                 </section>
