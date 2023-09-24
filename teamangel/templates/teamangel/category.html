@@ -60,7 +60,42 @@
 										<p>조회수: 개발하기</p>
 									</article>
 									{% endfor %}
+									{% if is_paginated %}
+							<!-- Pagination-->
+									<ul class="pagination">
+										{% if page_obj.has_previous %}
+											<li class="page-item">
+												<a class="page-link button" href="?page={{ page_obj.previous_page_number }}">&larr; Prev</a>
+											</li>
+										{% else %}
+											<li class="page-item disabled">
+												<span class="page-link button">&larr; Prev</span>
+											</li>
+										{% endif %}
 
+										{% for i in paginator.page_range %}
+											{% if i == page_obj.number %}
+												<li class="page-item active">
+													<a class="page" href="?page={{ i }}">{{ i }}</a>
+												</li>
+											{% else %}
+												<li class="page-item">
+													<a class="page" href="?page={{ i }}">{{ i }}</a>
+												</li>
+											{% endif %}
+										{% endfor %}
+
+										{% if page_obj.has_next %}
+											<li class="page-item">
+												<a class="page-link button" href="?page={{ page_obj.next_page_number }}">Next &rarr;</a>
+											</li>
+										{% else %}
+											<li class="page-item disabled">
+												<span class="page-link button">Next &rarr;</span>
+											</li>
+										{% endif %}
+									</ul>
+							{% endif %}
 								</div>
 							</section>
 						</div>

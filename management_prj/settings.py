@@ -125,10 +125,10 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # 이 부분을 추가합니다.
+    os.path.join(BASE_DIR, 'single_pages','static'),  # 이 부분을 추가합니다.
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
