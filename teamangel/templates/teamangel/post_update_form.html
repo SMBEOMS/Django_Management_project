@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>포스트 수정</title>
     <link rel="stylesheet" href="{% static 'teamangel/assets/css/main.css' %}" media="screen">
+
 </head>
 <body class="is-preload">
 
@@ -15,16 +16,18 @@
             <div class="inner">
                 <!-- Header -->
                <header id="header">
-                    <nav>
-					  <a href="/teamangel/" class="button">Home Page</a>
-					</nav>
-                    <ul class="icons">
-                        <li><a href="https://twitter.com/" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                        <li><a href="https://www.facebook.com/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                        <li><a href="https://www.snapchat.com/" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-                        <li><a href="https://www.instagram.com/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-                    </ul>
-                </header>
+					<a href="/teamangel/" class="logo"><strong>HOME PAGE</strong></a>
+					<ul class="icons">
+						{% if user.is_authenticated %}
+							<li><a href="{% url 'account_logout' %}" class="button primary small">Logout</a></li>
+						{% else %}
+							<li><a href="{% url 'account_login' %}" class="button small">Login</a></li>
+						{% endif %}
+						<li><a href="https://www.youtube.com/channel/UC893trfAnCUjJcbPE9z6XWA" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
+						<li><a href="https://www.facebook.com/people/%EC%B2%9C%EC%95%88%EC%82%AC%EC%9D%B4%ED%8A%B8/61551860214367/?mibextid=ZbWKwL" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/cheonansite/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+					</ul>
+				</header>
 
                 <!-- 포스트 작성 폼 -->
                 <section>
@@ -54,40 +57,18 @@
 										<input type="text" name="query" id="query" placeholder="Press Enter" />
 									</form>
 								</section>
-
 							<!-- Menu -->
 								<nav id="menu">
 									<header class="major">
 										<h2>Menu</h2>
 									</header>
 									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Space</a></li>
-										<li><a href="elements.html">Show and Exhibition</a></li>
-										<li><a href="elements.html">Brand</a></li>
+										<li><a href="/teamangel/">Homepage</a></li>
+										{% for category in categories %}
 										<li>
-											<span class="opener">Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
+											<a href="{{ category.get_absolute_url }}">{{ category }} ({{ category.post_set.count}})</a>
 										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
+										{% endfor %}
 									</ul>
 								</nav>
 
@@ -120,12 +101,12 @@
 									<header class="major">
 										<h2>Get in touch</h2>
 									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
 									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
+										<li class="icon solid fa-envelope">youniyamii@gamil.com</a></li>
+										<li class="icon solid fa-phone">+82-10-7628-6477</li>
+										<li class="icon solid fa-home">1234 Somewhere Road<br />
+										충청남도 천안시 동남구 상명대길 31</li>
 									</ul>
 								</section>
 

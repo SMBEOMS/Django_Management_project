@@ -32,20 +32,32 @@ def category_page(request, slug):
     page = request.GET.get('page')
     post_list = paginator.get_page(page)
 
+    is_paginated = post_list.has_other_pages()
+
     return render(
         request,
-        'teamangel/category.html',  # category.html 템플릿을 사용하도록 변경
+        'teamangel/category.html',
         {
             'categories': Category.objects.all(),
             'no_category_post_count': Post.objects.filter(category=None).count(),
             'category': category,
             'post_list': post_list,
+            'is_paginated': is_paginated,  # 추가
+            'page_obj': post_list,  # 추가
+            'paginator': paginator,
         }
     )
 
 
+
 class PostDetail(DetailView):
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+
+        return context
 
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
@@ -57,20 +69,27 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            raise PermissionDenied  # 포스트작성자마 수정할수있는 코드
+            raise PermissionDenied
+
+    def get_context_data(self, **kwargs):
+        context = super(PostUpdate, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
 
 
-class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):  # form 기준
+
+class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     fields = ['title', 'hook_text', 'content', 'category', 'head_image', 'file_upload']
 
     def test_func(self):
         return self.request.user.is_superuser or self.request.user.is_staff
 
-    # def form_valid(self, form):
-    #     current_user = self.request.user
-    #     if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
-    #         form.instance.author = current_user
+    def get_context_data(self, **kwargs):
+        context = super(PostCreate, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
 
 def new_comment(request, pk):
     if request.user.is_authenticated:
@@ -107,3 +126,4 @@ def delete_comment(request, pk):
         return redirect(post.get_absolute_url())
     else:
         raise PermissionDenied
+

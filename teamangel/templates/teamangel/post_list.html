@@ -17,20 +17,16 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="/teamangel/" class="logo"><strong>Cheonan Site</strong></a>
-									<ul class="actions small">
+									<a href="/teamangel/" class="logo"><strong>HOME PAGE</strong></a>
+									<ul class="icons">
 										{% if user.is_authenticated %}
 											<li><a href="{% url 'account_logout' %}" class="button primary small">Logout</a></li>
 										{% else %}
 											<li><a href="{% url 'account_login' %}" class="button small">Login</a></li>
 										{% endif %}
-									</ul>
-
-									<ul class="icons">
-										<li><a href="https://twitter.com/" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="https://www.facebook.com/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="https://www.snapchat.com/" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="https://www.instagram.com/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="https://www.youtube.com/channel/UC893trfAnCUjJcbPE9z6XWA" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
+										<li><a href="https://www.facebook.com/people/%EC%B2%9C%EC%95%88%EC%82%AC%EC%9D%B4%ED%8A%B8/61551860214367/?mibextid=ZbWKwL" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="https://www.instagram.com/cheonansite/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
 									</ul>
 								</header>
 
@@ -125,7 +121,8 @@
 							</section>
 							{% if is_paginated %}
 							<!-- Pagination-->
-									<ul class="pagination">
+							<div style="width: 100%; text-align: center;  bottom: 0px;">
+									<ul class="pagination" style="left: 0; right: 0">
 										{% if page_obj.has_previous %}
 											<li class="page-item">
 												<a class="page-link button" href="?page={{ page_obj.previous_page_number }}">&larr; Prev</a>
@@ -158,7 +155,9 @@
 											</li>
 										{% endif %}
 									</ul>
+							</div>
 							{% endif %}
+
 
 						</div>
 					</div>
@@ -217,7 +216,7 @@
 									<header class="major">
 										<h2>Get in touch</h2>
 									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
 									<ul class="contact">
 										<li class="icon solid fa-envelope">youniyamii@gamil.com</a></li>
 										<li class="icon solid fa-phone">+82-10-7628-6477</li>

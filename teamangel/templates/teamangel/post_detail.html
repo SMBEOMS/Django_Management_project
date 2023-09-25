@@ -21,24 +21,27 @@
 
 							<!-- Header -->
 								<header id="header">
-									<nav>
-                                      <a href="/teamangel/" class="button">Home Page</a>
-                                    </nav>
+									<a href="/teamangel/" class="logo"><strong>HOME PAGE</strong></a>
 									<ul class="icons">
-										{% if user.is_authenticated and user == post.author %}
-                            				<a class="btn btn-info btn-sm float-right" href="/teamangel/update_post/{{ post.pk }}/" role="button"><i class ="fas fa-pen"></i>Edit Post</a>
-                        				{% endif %}
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+
+										{% if user.is_authenticated %}
+											<li><a href="{% url 'account_logout' %}" class="button primary small">Logout</a></li>
+										{% else %}
+											<li><a href="{% url 'account_login' %}" class="button small">Login</a></li>
+										{% endif %}
+										<li><a href="https://www.youtube.com/channel/UC893trfAnCUjJcbPE9z6XWA" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
+										<li><a href="https://www.facebook.com/people/%EC%B2%9C%EC%95%88%EC%82%AC%EC%9D%B4%ED%8A%B8/61551860214367/?mibextid=ZbWKwL" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="https://www.instagram.com/cheonansite/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
 									</ul>
 								</header>
+
 
 							<!-- Conwtent -->
 								<section>
 									<header class="main">
+										{% if user.is_authenticated and user == post.author %}
+											<a class="btn btn-info btn-sm float-right" href="/teamangel/update_post/{{ post.pk }}/" role="button"><i class ="fas fa-pen"></i>Edit Post</a>
+										{% endif %}
 										<h1>{{ post.title }}</h1>
 
 										<h5>{{ post.hook_text }}</h5> <!-- 클래스 수정하기 -->
@@ -128,7 +131,44 @@
 										{% endfor %}
 									{% endif %}
 								</section>
+								{% if is_paginated %}
+							<!-- Pagination-->
+							<div style="width: 100%; text-align: center;  bottom: 0px;">
+									<ul class="pagination" style="left: 0; right: 0">
+										{% if page_obj.has_previous %}
+											<li class="page-item">
+												<a class="page-link button" href="?page={{ page_obj.previous_page_number }}">&larr; Prev</a>
+											</li>
+										{% else %}
+											<li class="page-item disabled">
+												<span class="page-link button">&larr; Prev</span>
+											</li>
+										{% endif %}
 
+										{% for i in paginator.page_range %}
+											{% if i == page_obj.number %}
+											<li class="page-item active">
+												<a class="page" href="?page={{ i }}">{{ i }}</a>
+											</li>
+											{% else %}
+											<li class="page-item">
+												<a class="page" href="?page={{ i }}">{{ i }}</a>
+											</li>
+											{% endif %}
+											{% endfor %}
+
+										{% if page_obj.has_next %}
+											<li class="page-item">
+												<a class="page-link button" href="?page={{ page_obj.next_page_number }}">Next &rarr;</a>
+											</li>
+										{% else %}
+											<li class="page-item disabled">
+												<span class="page-link button">Next &rarr;</span>
+											</li>
+										{% endif %}
+									</ul>
+							</div>
+							{% endif %}
 						</div>
 					</div>
 				<!-- Pagination-->
@@ -151,33 +191,12 @@
 										<h2>Menu</h2>
 									</header>
 									<ul>
-										<li><a href="index.html">Homepage</a></li>
-										<li><a href="generic.html">Space</a></li>
-										<li><a href="elements.html">Show and Exhibition</a></li>
-										<li><a href="elements.html">Brand</a></li>
+										<li><a href="/teamangel/">Homepage</a></li>
+										{% for category in categories %}
 										<li>
-											<span class="opener">Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
+											<a href="{{ category.get_absolute_url }}">{{ category }} ({{ category.post_set.count}})</a>
 										</li>
-										<li><a href="#">Etiam Dolore</a></li>
-										<li><a href="#">Adipiscing</a></li>
-										<li>
-											<span class="opener">Another Submenu</span>
-											<ul>
-												<li><a href="#">Lorem Dolor</a></li>
-												<li><a href="#">Ipsum Adipiscing</a></li>
-												<li><a href="#">Tempus Magna</a></li>
-												<li><a href="#">Feugiat Veroeros</a></li>
-											</ul>
-										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
+										{% endfor %}
 									</ul>
 								</nav>
 
@@ -210,7 +229,7 @@
 									<header class="major">
 										<h2>Get in touch</h2>
 									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
 									<ul class="contact">
 										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
 										<li class="icon solid fa-phone">(000) 000-0000</li>

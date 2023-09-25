@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>천안사이트</title>
     <link rel="stylesheet" href="{% static 'teamangel/assets/css/main.css' %}" media="screen">
+
+
+
 </head>
 <body class="is-preload">
 
@@ -17,22 +20,20 @@
 
 							<!-- Header -->
 								<header id="header">
-									<nav>
-                                      <a href="/teamangel/" class="button">Home Page</a>
-                                    </nav>
-									<ul class="actions small">
+									<!-- edit button -->
+									{% if user.is_authenticated and user == post.author %}
+										<a class="btn btn-info btn-sm float-right" href="/teamangel/update_post/{{ post.pk }}/" role="button"><i class ="fas fa-pen"></i>Edit Post</a>
+									{% endif %}
+									<a href="/teamangel/" class="logo"><strong>HOME PAGE</strong></a>
+									<ul class="icons">
 										{% if user.is_authenticated %}
 											<li><a href="{% url 'account_logout' %}" class="button primary small">Logout</a></li>
 										{% else %}
 											<li><a href="{% url 'account_login' %}" class="button small">Login</a></li>
 										{% endif %}
-									</ul>
-
-									<ul class="icons">
-										<li><a href="https://twitter.com/" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="https://www.facebook.com/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="https://www.snapchat.com/" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-										<li><a href="https://www.instagram.com/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="https://www.youtube.com/channel/UC893trfAnCUjJcbPE9z6XWA" class="icon brands fa-youtube"><span class="label">YouTube</span></a></li>
+										<li><a href="https://www.facebook.com/people/%EC%B2%9C%EC%95%88%EC%82%AC%EC%9D%B4%ED%8A%B8/61551860214367/?mibextid=ZbWKwL" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="https://www.instagram.com/cheonansite/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
 									</ul>
 								</header>
 
@@ -60,43 +61,62 @@
 										<p>조회수: 개발하기</p>
 									</article>
 									{% endfor %}
-									{% if is_paginated %}
-							<!-- Pagination-->
-									<ul class="pagination">
-										{% if page_obj.has_previous %}
+								</div>
+
+								{% if is_paginated %}
+									<style>
+										/* 페이지네이션을 감싸는 div 스타일 */
+										.pagination-wrapper {
+											width: 100%;
+											text-align: center;
+											position: relative;
+											margin-top: 20px; /* 상단 여백 추가 */
+										}
+
+										/* 페이지네이션 ul 스타일 */
+										.pagination-wrapper .pagination {
+											display: inline-block; /* 중앙 정렬을 위해 인라인 블록으로 설정 */
+										}
+									</style>
+
+									<div class="pagination-wrapper">
+										<!-- Pagination-->
+										<ul class="pagination">
+											{% if page_obj.has_previous %}
 											<li class="page-item">
 												<a class="page-link button" href="?page={{ page_obj.previous_page_number }}">&larr; Prev</a>
 											</li>
-										{% else %}
+											{% else %}
 											<li class="page-item disabled">
 												<span class="page-link button">&larr; Prev</span>
 											</li>
-										{% endif %}
-
-										{% for i in paginator.page_range %}
-											{% if i == page_obj.number %}
-												<li class="page-item active">
-													<a class="page" href="?page={{ i }}">{{ i }}</a>
-												</li>
-											{% else %}
-												<li class="page-item">
-													<a class="page" href="?page={{ i }}">{{ i }}</a>
-												</li>
 											{% endif %}
-										{% endfor %}
 
-										{% if page_obj.has_next %}
+											{% for i in paginator.page_range %}
+											{% if i == page_obj.number %}
+											<li class="page-item active">
+												<a class="page" href="?page={{ i }}">{{ i }}</a>
+											</li>
+											{% else %}
+											<li class="page-item">
+												<a class="page" href="?page={{ i }}">{{ i }}</a>
+											</li>
+											{% endif %}
+											{% endfor %}
+
+											{% if page_obj.has_next %}
 											<li class="page-item">
 												<a class="page-link button" href="?page={{ page_obj.next_page_number }}">Next &rarr;</a>
 											</li>
-										{% else %}
+											{% else %}
 											<li class="page-item disabled">
 												<span class="page-link button">Next &rarr;</span>
 											</li>
-										{% endif %}
-									</ul>
-							{% endif %}
-								</div>
+											{% endif %}
+										</ul>
+									</div>
+									{% endif %}
+
 							</section>
 						</div>
 					</div>
@@ -155,12 +175,12 @@
 									<header class="major">
 										<h2>Get in touch</h2>
 									</header>
-									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
 									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
+										<li class="icon solid fa-envelope">youniyamii@gamil.com</a></li>
+										<li class="icon solid fa-phone">+82-10-7628-6477</li>
+										<li class="icon solid fa-home">1234 Somewhere Road<br />
+										충청남도 천안시 동남구 상명대길 31</li>
 									</ul>
 								</section>
 

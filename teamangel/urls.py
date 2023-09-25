@@ -11,5 +11,4 @@ urlpatterns = [
     path('<int:pk>/', views.PostDetail.as_view()),
     path('', views.PostList.as_view()),
 
-    #path('category/<str:category_slug>/', views.category_view, name='category_view'),
 ]
