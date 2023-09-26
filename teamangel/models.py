@@ -29,7 +29,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
-
+    views = models.PositiveIntegerField(default=0)
 
 
     def __str__(self):

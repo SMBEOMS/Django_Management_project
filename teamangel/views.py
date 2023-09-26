@@ -17,6 +17,7 @@ class PostList(ListView):
         context['categories'] = Category.objects.all()
         context['comment_form'] = CommentForm
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        context['posts_by_views'] = Post.objects.all().order_by('-views')[:4]  # 조회수가 높은 게시글 5개
         return context  # -> post_list.html
 
 def category_page(request, slug):
@@ -58,6 +59,12 @@ class PostDetail(DetailView):
         context['categories'] = Category.objects.all()
 
         return context
+
+    def get_object(self):
+        obj = super().get_object()
+        obj.views += 1  # 조회수 증가
+        obj.save()
+        return obj
 
 
 class PostUpdate(LoginRequiredMixin, UpdateView):

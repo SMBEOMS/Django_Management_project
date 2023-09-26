@@ -47,44 +47,48 @@
 									</span>
 								</section>
 
-							<!-- Section -->
+							<!-- 인기 기사Section -->
 								<section>
-									<header class="major">
-										<h2>RECOMMEND POST</h2>
-									</header>
-									<div class="features">
-										<article>
-											<span class="icon fa-gem"></span>
-											<div class="content">
-												<h3>Portitor ullamcorper</h3>
-												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-											</div>
-										</article>
-										<article>
-											<span class="icon solid fa-paper-plane"></span>
-											<div class="content">
-												<h3>Sapien veroeros</h3>
-												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-											</div>
-										</article>
-										<article>
-											<span class="icon solid fa-rocket"></span>
-											<div class="content">
-												<h3>Quam lorem ipsum</h3>
-												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-											</div>
-										</article>
-										<article>
-											<span class="icon solid fa-signal"></span>
-											<div class="content">
-												<h3>Sed magna finibus</h3>
-												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-											</div>
-										</article>
-									</div>
+								<header class="major">
+									<h2>인기 기사 TOP4</h2>
+									{% if user.is_authenticated %}
+										{% if user.is_superuser or user.is_staff %}
+											<a class="btn btn-info btn-sm float-right" href="/teamangel/create_post/" role="button">
+												<i class ="fas fa-pen"></i>&nbsp;&nbsp;New Post</a>
+										{% endif %}
+									{% endif %}
+								</header>
+								<div class="posts">
+									{% for p in posts_by_views %}
+									<article>
+										<!-- 이미지  -->
+										{% if p.head_image %}
+											<span class="image"><img src="{{ p.head_image.url }}" alt="{{ p.title }} head-image" /></span>
+										{% else %}
+											<span class="image"><img src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random-image" /></span>
+										{% endif %}
+
+										<h2>{{ p.title }}</h2>
+										{% if p.hook_text %}
+											<h5 class="text-muted">{{ p.hook_text }}</h5> <!-- class 부분수정 -->
+										{% endif %}
+										<p>{{ p.content | truncatewords:20}}</p> <!-- 수정된 부분 -->
+										<div>작성날짜 {{ p.created_at }} by
+										{{ p.author | upper }}</div>
+										<ul class="actions">
+											<li><a href="{{ p.get_absolute_url }}" class="button">More</a></li>
+										</ul>
+
+										<!-- 조회수 -->
+										<p>조회수: {{ p.views }}</p>
+
+									</article>
+									{% endfor %}
+
+								</div>
 								</section>
 
-							<!-- Section -->
+							<!--최신기사 Section -->
 							<section>
 								<header class="major">
 									<h2>최신 기사</h2>
@@ -98,13 +102,14 @@
 								<div class="posts">
 									{% for p in post_list %}
 									<article>
+										<!-- 이미지  -->
 										{% if p.head_image %}
 											<span class="image"><img src="{{ p.head_image.url }}" alt="{{ p.title }} head-image" /></span>
 										{% else %}
 											<span class="image"><img src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random-image" /></span>
 										{% endif %}
-										<!-- 이미지 넣기 -->
-										<h2>{{ p.title }}</h2> <!-- 수정된 부분 -->
+
+										<h2>{{ p.title }}</h2>
 										{% if p.hook_text %}
 											<h5 class="text-muted">{{ p.hook_text }}</h5> <!-- class 부분수정 -->
 										{% endif %}
@@ -115,8 +120,12 @@
 											<li><a href="{{ p.get_absolute_url }}" class="button">More</a></li>
 										</ul>
 
+										<!-- 조회수 -->
+										<p>조회수: {{ p.views }}</p>
+
 									</article>
 									{% endfor %}
+
 								</div>
 							</section>
 							{% if is_paginated %}
@@ -186,30 +195,6 @@
 										{% endfor %}
 									</ul>
 								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Ante interdum</h2>
-									</header>
-									<div class="mini-posts">
-										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-									</div>
-									<ul class="actions">
-										<li><a href="#" class="button">More</a></li>
-									</ul>
-								</section>
 
 							<!-- Section -->
 								<section>
