@@ -34,15 +34,18 @@
                     <header class="major">
                         <h2>포스트 수정</h2>
                     </header>
-                    <div class="content">
-                        <!-- 폼 시작 -->
-                        <form method="post" enctype="multipart/form-data">
-						  {% csrf_token %}
-						  {{ form.as_p }}
-						  <button type="submit">저장</button>
+					<div class="content">
+						<!-- 폼 시작 -->
+						<form method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{{ form.as_p }}
+							<label for="images">이미지 업로드:</label>
+							<input type="file" name="images" multiple>
+							<button type="submit">저장</button>
 						</form>
-                        <!-- 폼 끝 -->
-                    </div>
+						<!-- 폼 끝 -->
+					</div>
+
                 </section>
 
             </div>

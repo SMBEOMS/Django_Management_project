@@ -10,7 +10,26 @@
     <title>{{ post.title }} - Cheonnan Site</title>
     <link rel="stylesheet" href="{% static 'teamangel/assets/css/main.css' %}" media="screen">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .post-images {
+            display: flex;
+            overflow-x: auto; /* 좌우 스크롤바 허용 */
+            overflow-y: hidden; /* 위아래 스크롤바 숨기기 */
+            width: 100%;
+            white-space: nowrap; /* 줄바꿈 방지 */
+        }
+
+        .post-images img {
+            flex: 0 0 auto;
+            width: 10%;
+        }
+        .post-images img {
+			flex: 0 0 auto;
+			margin-right: 10px; /* 오른쪽에 20px 간격 추가 */
+		}
+    </style>
 </head>
+
 <body class="is-preload">
 
 		<!-- Wrapper -->
@@ -54,6 +73,15 @@
 									<span class="image main" src="https://picsum.photos/seed/{{post.id}}/800/200" alt="random-image"></span>
 									{% endif %}
 									<hr class="major" />
+									<!-- 연결된 이미지들 표시 -->
+									<div class="post-images">
+										{% for post_image in post.images.all %}
+											<img src="{{ post_image.image.url }}" alt="Post Image" style="width: 40%;">
+										{% endfor %}
+									</div>
+
+
+
 
 									<h2>제목(지우기?)POST CONTENTS</h2>
 									<p>{{ post.content }}</p>
@@ -208,10 +236,10 @@
 									</header>
 									<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
 									<ul class="contact">
-										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-										<li class="icon solid fa-phone">(000) 000-0000</li>
-										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-										Nashville, TN 00000-0000</li>
+										<li class="icon solid fa-envelope">youniyamii@gamil.com</a></li>
+										<li class="icon solid fa-phone">+82-10-7628-6477</li>
+										<li class="icon solid fa-home">1234 Somewhere Road<br />
+										충청남도 천안시 동남구 상명대길 31</li>
 									</ul>
 								</section>
 
@@ -226,6 +254,32 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				let startX;
+				let scrollLeft;
 
+				const slider = document.querySelector('.post-images');
+
+				slider.addEventListener('mousedown', (e) => {
+					e.preventDefault();
+					startX = e.pageX - slider.offsetLeft;
+					scrollLeft = slider.scrollLeft;
+					slider.addEventListener('mousemove', onMove);
+					slider.addEventListener('mouseup', endDrag);
+					slider.addEventListener('mouseleave', endDrag);
+				});
+
+				function onMove(e) {
+					const x = e.pageX - slider.offsetLeft;
+					const walk = (x - startX);
+					slider.scrollLeft = scrollLeft - walk;
+				}
+
+				function endDrag() {
+					slider.removeEventListener('mousemove', onMove);
+					slider.removeEventListener('mouseup', endDrag);
+					slider.removeEventListener('mouseleave', endDrag);
+				}
+			</script>
 	</body>
 </html>

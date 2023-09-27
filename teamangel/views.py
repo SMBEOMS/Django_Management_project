@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import CommentForm
 
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, PostImage
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
@@ -83,6 +83,17 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         context['categories'] = Category.objects.all()
         return context
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
+
+        # 여러 이미지 저장
+        for file in self.request.FILES.getlist('images'):
+            PostImage.objects.create(image=file, post=post)
+
+        return super().form_valid(form)
+
 
 
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -96,6 +107,17 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         context = super(PostCreate, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
+
+        # 여러 이미지 저장
+        for file in self.request.FILES.getlist('images'):
+            PostImage.objects.create(image=file, post=post)
+
+        return super().form_valid(form)
 
 
 def new_comment(request, pk):

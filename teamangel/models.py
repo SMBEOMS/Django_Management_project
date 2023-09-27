@@ -56,4 +56,7 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
+class PostImage(models.Model):
+    image = models.ImageField(upload_to='teamangel/images/%Y/%m/%d')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
 
