@@ -64,44 +64,43 @@
 
             </div>
         </div>
+		<!--sidebar -->
 		<div id="sidebar">
-						<div class="inner">
+			<div class="inner">
+						<!-- Search -->
+							<section id="search" class="alt">
+								<form method="get" action="https://search.naver.com/search.naver" target="_blank">
+									<input type="text" name="query" id="query" placeholder="Press Enter" />
+								</form>
+							</section>
+						<!-- Menu -->
+							<nav id="menu">
+								<header class="major">
+									<h2>Menu</h2>
+								</header>
+								<ul>
+									<li><a href="/teamangel/">Homepage</a></li>
+									{% for category in categories %}
+									<li>
+										<a href="{{ category.get_absolute_url }}">{{ category }} ({{ category.post_set.count}})</a>
+									</li>
+									{% endfor %}
+								</ul>
+							</nav>
 
-							<!-- Search -->
-								<section id="search" class="alt">
-									<form method="get" action="https://search.naver.com/search.naver" target="_blank">
-										<input type="text" name="query" id="query" placeholder="Press Enter" />
-									</form>
-								</section>
-							<!-- Menu -->
-								<nav id="menu">
-									<header class="major">
-										<h2>Menu</h2>
-									</header>
-									<ul>
-										<li><a href="/teamangel/">Homepage</a></li>
-										{% for category in categories %}
-										<li>
-											<a href="{{ category.get_absolute_url }}">{{ category }} ({{ category.post_set.count}})</a>
-										</li>
-										{% endfor %}
-									</ul>
-								</nav>
-
-							<!-- Section -->
-								<section>
-									<header class="major">
-										<h2>Get in touch</h2>
-									</header>
-									<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
-									<ul class="contact">
-										<li class="icon solid fa-envelope">youniyamii@gamil.com</a></li>
-										<li class="icon solid fa-phone">+82-10-7628-6477</li>
-										<li class="icon solid fa-home">1234 Somewhere Road<br />
-										충청남도 천안시 동남구 상명대길 31</li>
-									</ul>
-								</section>
-
+						<!-- Section -->
+							<section>
+								<header class="major">
+									<h2>Get in touch</h2>
+								</header>
+								<h5>비즈니스 제의 및 의견 공유는 아래로 해주세요.</h5>
+								<ul class="contact">
+									<li class="icon solid fa-envelope">youniyamii@gamil.com</a></li>
+									<li class="icon solid fa-phone">+82-10-7628-6477</li>
+									<li class="icon solid fa-home">1234 Somewhere Road<br />
+									충청남도 천안시 동남구 상명대길 31</li>
+								</ul>
+							</section>
 						</div>
 					</div>
     </div>

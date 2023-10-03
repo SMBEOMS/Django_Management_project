@@ -1410,6 +1410,8 @@ ul.pagination {
       -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+      border: none !important; /* Bootstrap의 기본 테두리 스타일 무시 */
+      background-color: transparent !important; /* Bootstrap의 기본 배경색 무시 */
       border-bottom: 0;
       border-radius: 0.375em;
       display: inline-block;
