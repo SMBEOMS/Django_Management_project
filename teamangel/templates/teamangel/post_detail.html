@@ -84,28 +84,29 @@
 											<img src="{{ post_image.image.url }}" alt="Post Image" style="width: 40%;">
 										{% endfor %}
 									</div>
-
-
-
-
-									<h2>제목(지우기?)POST CONTENTS</h2>
-									<p>{{ post.content }}</p>
-									<p>수정부분(지우기)여기에 포스트 부분입니다</p>
-
 									<hr class="major" />
-									{% if post.file_upload %}
-									<a href="{{ post.file_upload.url }}" class="btn btn-primary" role="button" download>
-										{% if post.get_file_ext == 'csv' %}
-											<i class="fas fa-file-csv"></i>
-										{% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
-											<i class="fas fa-file-excel"></i>
-										{% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
-											<i class="fas fa-file-word"></i>
-										{% else %}
-											<i class="fas fa-file"></i>
-										{% endif %}
-										Download {{ post.get_file_name }}
-									</a>
+
+
+
+
+									<h2>POST CONTENTS</h2>
+									<p>{{ post.content }}</p>
+									<hr class="major" />
+
+<!--									<hr class="major" />--파일 업로드>
+<									{% if post.file_upload %}-->
+<!--									<a href="{{ post.file_upload.url }}" class="btn btn-primary" role="button" download>-->
+<!--										{% if post.get_file_ext == 'csv' %}-->
+<!--											<i class="fas fa-file-csv"></i>-->
+<!--										{% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}-->
+<!--											<i class="fas fa-file-excel"></i>-->
+<!--										{% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}-->
+<!--											<i class="fas fa-file-word"></i>-->
+<!--										{% else %}-->
+<!--											<i class="fas fa-file"></i>-->
+<!--										{% endif %}-->
+<!--										Download {{ post.get_file_name }}-->
+<!--									</a>-->
 								{% endif %}
 
 									<hr class="major" />
