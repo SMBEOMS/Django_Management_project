@@ -16,6 +16,11 @@
 			align-items: center;
 			height: 100%;
 		}
+		.centered-image {
+			display: flex;
+			justify-content: center;
+		}
+
 	</style>
 
 </head>
@@ -67,9 +72,9 @@
 											<div class="carousel-item {% if forloop.first %}active{% endif %}">
 												<article>
 													{% if p.head_image %}
-														<span class="image"><img src="{{ p.head_image.url }}" alt="{{ p.title }} head-image" /></span>
+														<span class="image centered-image"><img src="{{ p.head_image.url }}" alt="{{ p.title }} head-image" /></span>
 													{% else %}
-														<span class="image"><img src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random-image" /></span>
+														<span class="image centered-image"><img src="https://picsum.photos/seed/{{ p.id }}/800/200" alt="random-image" /></span>
 													{% endif %}
 													<h2>{{ p.title }}</h2>
 													{% if p.hook_text %}

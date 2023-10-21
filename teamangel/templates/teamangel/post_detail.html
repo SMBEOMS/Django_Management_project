@@ -68,7 +68,6 @@
 											<a class="btn btn-info btn-sm float-right" href="/teamangel/update_post/{{ post.pk }}/" role="button"><i class ="fas fa-pen"></i>Edit Post</a>
 										{% endif %}
 										<h1>{{ post.title }}</h1>
-
 										<h5>{{ post.hook_text }}</h5> <!-- 클래스 수정하기 -->
                                         <h4>{{ post.created_at }}</h4>
 									</header>
@@ -90,9 +89,8 @@
 
 
 									<h2>POST CONTENTS</h2>
-									<p>{{ post.content }}</p>
+									<<p>{{ post.content|linebreaks }}</p>
 									<hr class="major" />
-
 <!--									<hr class="major" />--파일 업로드>
 <									{% if post.file_upload %}-->
 <!--									<a href="{{ post.file_upload.url }}" class="btn btn-primary" role="button" download>-->
